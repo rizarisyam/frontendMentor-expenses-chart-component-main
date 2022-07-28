@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link href="./style_reset.css" rel="stylesheet">
+  <link href="./style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+<title>Frontend Mentor | Expenses chart component</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    
+  </style>
+</head>
+<body class="font-dm-sans h-screen bg-red-400 flex justify-center items-center">
+<!-- 
+  My balance
+  $921.48
+
+  Spending - Last 7 days
+
+  mon
+  tue
+  wed
+  thu
+  fri
+  sat
+  sun
+
+  Total this month
+  $478.33
+
+  +2.4%
+  from last month -->
+<main>
+
+
+  <div id="header" class="">
+    <div>
+      <h1>My balance</h1>
+  <h1>$921.48</h1>
+    </div>
+  <div id="contentRight">
+    <div></div>
+    <div></div>
+  </div>
+  </div>
+
+  <div id="card">
+    <h1>Spending - Last 7 days</h1>
+
+    <div id="container_canvas">
+      <canvas id="myChart" width="400" height="400"></canvas>
+
+    <div class="border"></div>
+    </div>
+
+    <div class="footer">
+      <div>
+        <h1>Total this month</h1>
+        <h1>$478.33</h1>
+      </div>
+
+      <div>
+        <h1>+2.4%</h1>
+        <h1>from last month</h1>
+      </div>
+    </div>
+  </div>
+</main>
+  
+  <!-- <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Your Name Here</a>.
+  </div> -->
+
+  <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+    
+    const DUMMY_DATA = [
+  {
+    "x": "mon",
+    "y": 17.45
+  },
+  {
+    "x": "tue",
+    "y": 34.91
+  },
+  {
+    "x": "wed",
+    "y": 52.36
+  },
+  {
+    "x": "thu",
+    "y": 31.07
+  },
+  {
+    "x": "fri",
+    "y": 23.39
+  },
+  {
+    "x": "sat",
+    "y": 43.28
+  },
+  {
+    "x": "sun",
+    "y": 25.48
+  }
+];
+
+const transformData = DUMMY_DATA.map((value) => {
+  // value['x'] = value['day']
+  // value['y'] = value['amount']
+  // delete value['day']
+  // delete value['amount']
+  
+});
+
+console.log(transformData);
+function handleHover(evt, item, legend) {
+  legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
+    console.log(color, index, colors)
+    colors[index] = index === item.index ? color : 'green';
+  });
+  legend.chart.update();
+}
+    
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: weekdays,
+            datasets: [{
+                label: '',
+                // data: [17.45, 34.91, 52.36, 31.07, 23.39, 43.28,25.48],
+                data: DUMMY_DATA,
+                backgroundColor: [
+                'hsl(10, 79%, 65%)',
+                'hsl(10, 79%, 65%)',
+                'hsl(10, 79%, 65%)',
+                'hsl(10, 79%, 65%)',
+                'hsl(10, 79%, 65%)',
+                'hsl(10, 79%, 65%)',
+                'hsl(10, 79%, 65%)',
+                ],
+                borderRadius: 5,
+                borderColor: [
+                 
+                    // 'rgba(255, 99, 132, 1)',
+                    // 'rgba(54, 162, 235, 1)',
+                    // 'rgba(255, 206, 86, 1)',
+                    // 'rgba(75, 192, 192, 1)',
+                    // 'rgba(153, 102, 255, 1)',
+                    // 'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 0,
+                hoverBackgroundColor: ['rgb(118, 181, 188)','rgb(118, 181, 188)','rgb(118, 181, 188)','rgb(118, 181, 188)','rgb(118, 181, 188)','rgb(118, 181, 188)']
+            }]
+        },
+        options: {
+            plugins: {
+              legend: {
+                display: false,
+                onHover: handleHover,
+              }
+            },
+            scales: {
+                y: {
+                  display: false,
+                    // beginAtZero: true
+                },
+                x : {
+                  ticks: {
+                    color: 'rgb(201, 195, 191)'
+                  }
+                }
+            }
+        }
+    });
+    </script>
+</body>
+</html>
